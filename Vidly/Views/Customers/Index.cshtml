@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Vidly.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customers</h2>
+@Html.ActionLink("New", "New", "Customers", null, new { @class = "btn btn-sm btn-success float-right" })
+<br />
+<br />
+@*@if (!Model.Any())
+    {
+        <h2>We don't have any customers yet</h2>
+    }
+    else
+    {*@
+<table id="customers" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">Membership Type</th>
+            <th scope="col">Discount Rate</th>
+            <th scope="col">Edit / Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var customer in Model)
+        {
+            <tr>
+                <td scope="row">@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
+                <td scope="row">@customer.MembershipType.DiscountRate</td>
+                <td scope="row">@customer.MembershipType.Name</td>
+                <td scope="row"><button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button></td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+@*}*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "api/customers",
+                    dataSrc: "" // Used to a specific object within the JSON, only if applicable
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "membershipType.discountRate",
+                        render: function (data) {
+                            return data + "%";
+                        }
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<i class='bi bi-pencil-square js-edit' data-customer-id=" + data + "></i> / <i class='bi bi-trash3 js-delete' data-customer-id=" + data + "></i>";
+                        }
+                    }
+                ]
+            });
+
+            $("#customers").on("click", ".js-edit", function () {
+                window.location.replace("/customers/edit/" + $(this).attr("data-customer-id"));
+            });
+
+            $("#customers").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                //button.parents("tr").remove();
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+
+                //if (confirm("Are you sure you want to delete this customer?")) {
+                //    $.ajax({
+                //        url: "/api/customers/" + button.attr("data-customer-id"),
+                //        method: "DELETE",
+                //        success: function () {
+                //            button.parents("tr").remove();
+                //        }
+                //    });
+                //};
+            });
+        });
+    </script>
+}

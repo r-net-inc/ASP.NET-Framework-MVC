@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Vidly.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Movies</h2>
+<br />
+@*@if (!Model.Any())
+    {
+        <h3>We don't have any movies yet.</h3>
+    }
+    else
+    {*@
+<table id="movies" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Movie</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Release Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var movie in Model)
+            {
+                <tr>
+                    <td scope="row">@Html.ActionLink(movie.Title, "Edit", "Movies", new { id = movie.Id }, null)</td>
+                    <td scope="row">@movie.Genre.Name</td>
+                    <td scope="row">@movie.ReleaseYear</td>
+                    <td scope="row"><i class='bi bi-pencil-square js-edit'></i> / <i class='bi bi-trash3 js-delete' data-movie-id="@movie.Id"></i></td>
+                </tr>
+            }*@
+    </tbody>
+</table>
+@*}*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "api/movies",
+                    dataSrc: "" // Used to a specific object within the JSON, only if applicable
+                },
+                columns: [
+                    {
+                        data: "title"
+                    },
+                    {
+                        data: "genre.name"
+                    },
+                    {
+                        data: "releaseYear"
+                    }
+                ]
+            });
+        });
+    </script>
+}

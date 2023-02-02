@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Vidly.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Customers</h2>
+<br />
+@*@if (!Model.Any())
+    {
+        <h2>We don't have any customers yet</h2>
+    }
+    else
+    {*@
+<table id="customers" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">Membership Type</th>
+            <th scope="col">Discount Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@foreach (var customer in Model)
+            {
+                <tr>
+                    <td scope="row">@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
+                    <td scope="row">@customer.MembershipType.Name</td>
+                    <td scope="row"><button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button></td>
+                </tr>
+            }*@
+    </tbody>
+</table>
+@*}*@
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "api/customers",
+                    dataSrc: "" // Used to a specific object within the JSON, only if applicable
+                },
+                columns: [
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "membershipType.discountRate",
+                        render: function (data) {
+                            return data + "%";
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+}
