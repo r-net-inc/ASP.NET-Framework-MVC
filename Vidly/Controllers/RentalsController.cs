@@ -35,6 +35,7 @@ namespace Vidly.Controllers
             return View(rentals);
         }
 
+        [Authorize(Roles = RoleName.CanManageRentals)]
         public ActionResult New()
         {
             return View();

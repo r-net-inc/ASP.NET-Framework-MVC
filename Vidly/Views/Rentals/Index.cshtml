@@ -29,58 +29,42 @@
                 },
                 columns: [
                     {
-                        data: "name",
-                        render: function (data, type, customer) {
-                            return "<a href='/customers/details/" + customer.id + "'>" + customer.name + "</a>";
-                        }
+                        data: "customer.name",
                     },
                     {
-                        data: "membershipType.name"
+                        data: "movie.title"
                     },
                     {
-                        data: "membershipType.discountRate",
-                        render: function (data) {
-                            return data + "%";
-                        }
+                        data: "dateRented"
+                    },
+                    {
+                        data: "dateReturned"
                     },
                     {
                         data: "id",
-                        render: function (data) {
-                            return "<i class='bi bi-pencil-square js-edit' data-customer-id=" + data + "></i> / <i class='bi bi-trash3 js-delete' data-customer-id=" + data + "></i>";
+                        render: function (data, type, rental) {
+                            if (rental.dateReturned == null)
+                                return "<i class='bi bi-trash3 js-return' data-rental-id=" + data + "></i>";
                         }
                     }
                 ]
             });
 
-            $("#customers").on("click", ".js-edit", function () {
-                window.location.replace("/customers/edit/" + $(this).attr("data-customer-id"));
-            });
-
-            $("#customers").on("click", ".js-delete", function () {
+            $("#rentals").on("click", ".js-return", function () {
                 var button = $(this);
 
-                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                bootbox.confirm("Are you sure you want to return this rental?", function (result) {
                     if (result) {
                         $.ajax({
-                            url: "/api/customers/" + button.attr("data-customer-id"),
-                            method: "DELETE",
+                            url: "/api/rentals/" + button.attr("data-rental-id"),
+                            method: "PUT",
                             success: function () {
                                 //button.parents("tr").remove();
-                                table.row(button.parents("tr")).remove().draw();
+                                table.row(button.parents("tr")).draw();
                             }
                         });
                     }
                 });
-
-                //if (confirm("Are you sure you want to delete this customer?")) {
-                //    $.ajax({
-                //        url: "/api/customers/" + button.attr("data-customer-id"),
-                //        method: "DELETE",
-                //        success: function () {
-                //            button.parents("tr").remove();
-                //        }
-                //    });
-                //};
             });
         });
     </script>

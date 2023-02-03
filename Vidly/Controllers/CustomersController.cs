@@ -37,7 +37,6 @@ namespace Vidly.Controllers
         }
 
         // GET /Customers/Details/id
-        [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Details(int id)
         {
             var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(u => u.Id == id);

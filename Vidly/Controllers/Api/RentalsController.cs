@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Vidly.Dtos;
 using Vidly.Models;
+using AutoMapper;
 
 namespace Vidly.Controllers.Api
 {
@@ -27,7 +28,7 @@ namespace Vidly.Controllers.Api
         // GET /api/rentals
         public IHttpActionResult GetRentals()
         {
-            var rentals = _context.Rentals.Include(r => r.Movie).ToList();
+            var rentals = _context.Rentals.Include(r => r.Customer).Include(r => r.Movie).ToList();
 
             return Ok(rentals);
         }
@@ -86,6 +87,32 @@ namespace Vidly.Controllers.Api
             _context.SaveChanges();
 
             return Ok();
+        }
+
+
+
+        // PUT /api/rentals/id
+        [HttpPut]
+        [Authorize(Roles = RoleName.CanManageRentals)]
+        public IHttpActionResult ReturnRental(RentalDto rentalDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == rentalDto.Id);
+
+            if (rentalInDb == null)
+                return NotFound();
+
+            rentalInDb.DateReturned = DateTime.Today;
+            rentalInDb.Movie.NumberAvailable++;
+
+            //Mapper.Map<CustomerDto, Customer>(customerDto, customerInDb); // (Source, Destination)
+            Mapper.Map(rentalDto, rentalInDb); // (Source, Destination)
+
+            _context.SaveChanges();
+
+            return Ok(new Uri(Request.RequestUri.ToString()));
         }
     }
 }
