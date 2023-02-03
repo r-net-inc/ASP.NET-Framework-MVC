@@ -41,7 +41,7 @@
                 <td scope="row">
                     @if (@rental.DateReturned == null)
                     {
-                    @Html.ActionLink("Return", "ReturnRental", "Rentals", new { id = rental.Id }, new { @class = "btn btn-sm btn-success" });
+                    @Html.ActionLink("Return", "ReturnRental", "Rentals", new { rentalId = rental.Id, movieId = rental.Movie.Id }, new { @class = "btn btn-sm btn-success" });
                     }
                 </td>
             </tr>

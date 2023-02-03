@@ -41,19 +41,21 @@ namespace Vidly.Controllers
             return View();
         }
 
-        public ActionResult ReturnRental(int id)
+        public ActionResult ReturnRental(int rentalId, int movieId)
         {
-            var rentalInDb = _context.Rentals.Include(m => m.Movie).Include(c => c.Customer).SingleOrDefault(r => r.Id == id);
+            var rentalInDb = _context.Rentals.Include(c => c.Customer).SingleOrDefault(r => r.Id == rentalId);
 
             if (rentalInDb == null)
                 return HttpNotFound();
 
+            var movieInDb = _context.Movies.Single(m => m.Id == movieId);
+
             rentalInDb.DateReturned = DateTime.Today;
-            rentalInDb.Movie.NumberAvailable++;
+            movieInDb.NumberAvailable++;
 
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Rentals");
+            return RedirectToAction("Details", "Customers", new { id = rentalInDb.Customer.Id });
         }
     }
 }
