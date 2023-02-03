@@ -5,21 +5,22 @@
 
 <h2>Customer Details</h2>
 <br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.Name)
-    @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", disabled = "disabled" })
+<div id="customer" class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="~/Content/customerprofilepictemplate-612x612.jpg" class="img-fluid rounded-start" alt="Customer's Profile Picture'">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h4 class="card-title">@Model.Customer.Name</h4><br />
+                <p class="card-text">Membership Type: @Model.Customer.MembershipType.Name</p>
+                <p class="card-text">Date of Birth: @Model.Customer.Birthdate</p>
+                @*<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
+            </div>
+        </div>
+    </div>
 </div>
 <br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.MembershipTypeId)
-    @Html.TextBoxFor(m => m.Customer.MembershipType.Name, new { @class = "form-control", disabled = "disabled" })
-</div>
-<br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.Birthdate)
-    @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:MMM d yyyy}", new { @class = "form-control", disabled = "disabled" })
-</div>
-<br /><br />
 <h3>Rental History</h3>
 <br />
 <table id="rentals" class="table table-hover table-bordered table-striped">
@@ -28,7 +29,7 @@
             <th scope="col">Movie</th>
             <th scope="col">Date Rented</th>
             <th scope="col">Date Returned</th>
-            <th scope="col"></th>
+            <th scope="col">Return</th>
         </tr>
     </thead>
     <tbody>

@@ -33,7 +33,18 @@ namespace Vidly.Controllers.Api
             return Ok(rentals);
         }
 
-        // POST: /Api/Rentals
+        // GET /api/rentals/id
+        public IHttpActionResult GetRentals(int customerId)
+        {
+            var rental = _context.Rentals.SingleOrDefault(r => r.Customer.Id == customerId);
+
+            if (rental == null)
+                return NotFound();
+
+            return Ok(Mapper.Map<Rental, RentalDto>(rental));
+        }
+
+        // POST: /api/rentals
         [HttpPost]
         public  IHttpActionResult CreateNewRentals(NewRentalDto newRental)
         {
