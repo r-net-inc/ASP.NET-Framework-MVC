@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -21,6 +22,14 @@ namespace Vidly.Controllers.Api
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+        }
+
+        // GET /api/rentals
+        public IHttpActionResult GetRentals()
+        {
+            var rentals = _context.Rentals.Include(r => r.Movie).ToList();
+
+            return Ok(rentals);
         }
 
         // POST: /Api/Rentals
@@ -62,7 +71,7 @@ namespace Vidly.Controllers.Api
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPost]
         public IHttpActionResult ReturnRental (int id)
         {
             var rental = _context.Rentals.SingleOrDefault(r => r.Id == id);
@@ -72,6 +81,9 @@ namespace Vidly.Controllers.Api
 
             rental.DateReturned = DateTime.Today;
             rental.Movie.NumberAvailable++;
+
+            _context.Rentals.Add(rental);
+            _context.SaveChanges();
 
             return Ok();
         }

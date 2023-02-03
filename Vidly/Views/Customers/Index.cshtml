@@ -26,7 +26,7 @@
         @*@foreach (var customer in Model)
         {
             <tr>
-                <td scope="row">@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.Id }, null)</td>
+                <td scope="row">@Html.ActionLink(customer.Name, "Edit", "Customers", null, new { id = customer.Id })</td>
                 <td scope="row">@customer.MembershipType.DiscountRate</td>
                 <td scope="row">@customer.MembershipType.Name</td>
                 <td scope="row"><button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button></td>
@@ -103,5 +103,3 @@
         });
     </script>
 }
-
-<a href='~/customers/details' ></a>

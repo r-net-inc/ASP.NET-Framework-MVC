@@ -129,6 +129,7 @@ namespace Vidly.Controllers
             return View("CustomerForm", viewModel);
         }
 
+        [HttpDelete]
         [Authorize(Roles = RoleName.CanManageCustomers)]
         public ActionResult Delete(int id)
         {

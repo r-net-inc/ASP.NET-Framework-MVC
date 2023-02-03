@@ -22,6 +22,16 @@
     <div class="col-md-4">
         <h2>Middleware</h2>
         <p>Running on an IIS Server hosted on-premise at R-NET and reachable via the internet at www.R-NET.tech/Vidly</p>
-        <p><a class="btn btn-default" href="www.R-NET.tech">Check out R-NET &raquo;</a></p>
+        <p><a class="btn btn-default js-r-net">Check out R-NET &raquo;</a></p>
     </div>
 </div>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".js-r-net").on("click", function () {
+                window.location.replace("http://www.r-net.tech");
+            });
+        });
+    </script>    
+}

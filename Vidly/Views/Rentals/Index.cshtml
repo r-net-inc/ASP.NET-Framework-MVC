@@ -1,52 +1,21 @@
-﻿@model Vidly.ViewModels.CustomerDetailsViewModel
+﻿@model IEnumerable<Vidly.Models.Rental>
 @{
-    ViewBag.Title = "Customer Details";
+    ViewBag.Title = "Rentals";
 }
 
-<h2>Customer Details</h2>
-<br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.Name)
-    @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", disabled = "disabled" })
-</div>
-<br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.MembershipTypeId)
-    @Html.TextBoxFor(m => m.Customer.MembershipType.Name, new { @class = "form-control", disabled = "disabled" })
-</div>
-<br />
-<div class="form-group">
-    @Html.LabelFor(m => m.Customer.Birthdate)
-    @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:MMM d yyyy}", new { @class = "form-control", disabled = "disabled" })
-</div>
-<br /><br />
-<h3>Rental History</h3>
+<h2>@ViewBag.Title</h2>
 <br />
 <table id="rentals" class="table table-hover table-bordered table-striped">
     <thead>
         <tr>
+            <th scope="col">Customer</th>
             <th scope="col">Movie</th>
             <th scope="col">Date Rented</th>
             <th scope="col">Date Returned</th>
-            <th scope="col"></th>
+            <th scope="col">Return</th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var rental in Model.Rentals)
-        {
-            <tr>
-                <td scope="row">@rental.Movie.Title</td>
-                <td scope="row">@rental.DateRented</td>
-                <td scope="row">@rental.DateReturned</td>
-                <td scope="row">
-                    @if (@rental.DateReturned == null)
-                    {
-                    <button class="btn btn-sm btn-success js-return" data-rental-id="@rental.Id">Return <i class="bi bi-box-arrow-in-down"></i></button>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
+    <tbody></tbody>
 </table>
 
 @section scripts
@@ -83,14 +52,18 @@
                 ]
             });
 
-            $("#rentals").on("click", ".js-return", function () {
+            $("#customers").on("click", ".js-edit", function () {
+                window.location.replace("/customers/edit/" + $(this).attr("data-customer-id"));
+            });
+
+            $("#customers").on("click", ".js-delete", function () {
                 var button = $(this);
 
                 bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
                     if (result) {
                         $.ajax({
-                            url: "/api/rentals/" + button.attr("data-rental-id"),
-                            method: "POST",
+                            url: "/api/customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
                             success: function () {
                                 //button.parents("tr").remove();
                                 table.row(button.parents("tr")).remove().draw();
@@ -98,6 +71,17 @@
                         });
                     }
                 });
+
+                //if (confirm("Are you sure you want to delete this customer?")) {
+                //    $.ajax({
+                //        url: "/api/customers/" + button.attr("data-customer-id"),
+                //        method: "DELETE",
+                //        success: function () {
+                //            button.parents("tr").remove();
+                //        }
+                //    });
+                //};
             });
+        });
     </script>
 }
