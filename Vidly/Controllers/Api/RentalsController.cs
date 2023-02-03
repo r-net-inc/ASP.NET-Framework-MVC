@@ -9,11 +9,11 @@ using Vidly.Models;
 
 namespace Vidly.Controllers.Api
 {
-    public class NewRentalsController : ApiController
+    public class RentalsController : ApiController
     {
         private readonly ApplicationDbContext _context;
 
-        public NewRentalsController()
+        public RentalsController()
         {
             _context = new ApplicationDbContext();
         }
@@ -58,6 +58,20 @@ namespace Vidly.Controllers.Api
             }
 
             _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public IHttpActionResult ReturnRental (int id)
+        {
+            var rental = _context.Rentals.SingleOrDefault(r => r.Id == id);
+
+            if (rental == null)
+                return NotFound();
+
+            rental.DateReturned = DateTime.Today;
+            rental.Movie.NumberAvailable++;
 
             return Ok();
         }
