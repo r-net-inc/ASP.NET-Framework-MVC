@@ -72,34 +72,15 @@ namespace Vidly.Controllers.Api
             return Ok();
         }
 
-        [HttpPost]
-        public IHttpActionResult ReturnRental (int id)
-        {
-            var rental = _context.Rentals.SingleOrDefault(r => r.Id == id);
-
-            if (rental == null)
-                return NotFound();
-
-            rental.DateReturned = DateTime.Today;
-            rental.Movie.NumberAvailable++;
-
-            _context.Rentals.Add(rental);
-            _context.SaveChanges();
-
-            return Ok();
-        }
-
-
-
         // PUT /api/rentals/id
         [HttpPut]
         [Authorize(Roles = RoleName.CanManageRentals)]
-        public IHttpActionResult ReturnRental(RentalDto rentalDto)
+        public IHttpActionResult ReturnRental(int id, RentalDto rentalDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == rentalDto.Id);
+            var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
 
             if (rentalInDb == null)
                 return NotFound();

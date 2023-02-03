@@ -41,7 +41,7 @@
                 <td scope="row">
                     @if (@rental.DateReturned == null)
                     {
-                    <button class="btn btn-sm btn-success js-return" data-rental-id="@rental.Id">Return <i class="bi bi-box-arrow-in-down"></i></button>
+                    @Html.ActionLink("Return", "ReturnRental", "Rentals", new { id = rental.Id }, new { @class = "btn btn-sm btn-success" });
                     }
                 </td>
             </tr>

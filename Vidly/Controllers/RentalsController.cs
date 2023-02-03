@@ -41,9 +41,9 @@ namespace Vidly.Controllers
             return View();
         }
 
-        public ActionResult Return(int id)
+        public ActionResult ReturnRental(int id)
         {
-            var rentalInDb = _context.Rentals.SingleOrDefault(r => r.Id == id);
+            var rentalInDb = _context.Rentals.Include(m => m.Movie).Include(c => c.Customer).SingleOrDefault(r => r.Id == id);
 
             if (rentalInDb == null)
                 return HttpNotFound();
@@ -53,7 +53,7 @@ namespace Vidly.Controllers
 
             _context.SaveChanges();
 
-            return RedirectToAction("Details", "Customers", id);
+            return RedirectToAction("Index", "Rentals");
         }
     }
 }
