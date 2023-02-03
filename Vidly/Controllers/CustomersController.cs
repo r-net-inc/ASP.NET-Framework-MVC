@@ -41,13 +41,20 @@ namespace Vidly.Controllers
         public ActionResult Details(int id)
         {
             var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(u => u.Id == id);
-
+            
             if (customer == null)
             {
                 return HttpNotFound();
             }
 
-            return View(customer);
+            var rentals = _context.Rentals.Include(r => r.Movie).Where(r => r.Customer.Id == id).ToList();
+
+            var viewModel = new CustomerDetailsViewModel {
+                Customer = customer,
+                Rentals = rentals
+            };
+
+            return View(viewModel);
         }
 
         [Authorize(Roles = RoleName.CanManageCustomers)]

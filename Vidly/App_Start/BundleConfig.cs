@@ -17,13 +17,14 @@ namespace Vidly
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/lib").Include(
+                      "~/Scripts/jquery-{version}.js",
                       "~/Scripts/bootstrap.bundle.js",
                       "~/Scripts/typeahead.bundle.js",
                       "~/Scripts/bootbox.js",
                       "~/Scripts/DataTables/jquery.dataTables.js",
                       "~/Scripts/DataTables/dataTables.bootstrap4.js",
-                      "~/Scripts/toastr.js",
-                      "~/Scripts/jquery-{version}.js"));
+                      "~/Scripts/toastr.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

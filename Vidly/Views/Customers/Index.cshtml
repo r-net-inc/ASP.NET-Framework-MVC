@@ -47,7 +47,10 @@
                 },
                 columns: [
                     {
-                        data: "name"
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/details/" + customer.id + "'>" + customer.name + "</a>";
+                        }
                     },
                     {
                         data: "membershipType.name"
@@ -100,3 +103,5 @@
         });
     </script>
 }
+
+<a href='~/customers/details' ></a>

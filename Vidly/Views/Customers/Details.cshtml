@@ -1,0 +1,45 @@
+﻿@model Vidly.ViewModels.CustomerDetailsViewModel
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<h2>Customer Details</h2>
+<br />
+<div class="form-group">
+    @Html.LabelFor(m => m.Customer.Name)
+    @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", disabled = "disabled" })
+</div>
+<br />
+<div class="form-group">
+    @Html.LabelFor(m => m.Customer.MembershipTypeId)
+    @Html.TextBoxFor(m => m.Customer.MembershipType.Name, new { @class = "form-control", disabled = "disabled" })
+</div>
+<br />
+<div class="form-group">
+    @Html.LabelFor(m => m.Customer.Birthdate)
+    @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:MMM d yyyy}", new { @class = "form-control", disabled = "disabled" })
+</div>
+<br /><br />
+<h3>Rental History</h3>
+<br />
+<table id="rentals" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Movie</th>
+            <th scope="col">Date Rented</th>
+            <th scope="col">Date Returned</th>
+            <th scope="col">Return</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rental in Model.Rentals)
+        {
+            <tr>
+                <td scope="row">@rental.Movie.Title</td>
+                <td scope="row">@rental.DateRented</td>
+                <td scope="row">@rental.DateReturned</td>
+                <td scope="row"></td>
+            </tr>
+        }
+    </tbody>
+</table>
