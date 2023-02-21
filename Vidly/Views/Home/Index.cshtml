@@ -12,26 +12,28 @@
     <div class="col-md-4">
         <h2>Server-Side</h2>
         <p>
-            Built upon ASP.NET MVC using C# for the RESTful APIs/Controllers and Entity Frameworks 6 Code-First approach on an MSSQL database.
+            Built upon ASP.NET MVC5 using C# for the RESTful APIs/Controllers and Entity Frameworks 6 Code-First approach on an MSSQL database.
         </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Middleware</h2>
+        <p>Running on an IIS Server hosted on-premise at R-NET and reachable via the internet at R-NET.tech</p>
+        <p><a class="btn btn-default" href="https://www.R-NET.tech">Check out R-NET &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Client-Side</h2>
         <p>Multiple approaches and plugins used to render views with HTML Helper methods, jQuery for dynamic tables and client-side form validation, Bootstrap4, BootBox, Datatables and Toastr.</p>
     </div>
-    <div class="col-md-4">
-        <h2>Middleware</h2>
-        <p>Running on an IIS Server hosted on-premise at R-NET and reachable via the internet at www.R-NET.tech/Vidly</p>
-        <p><a class="btn btn-default js-r-net">Check out R-NET &raquo;</a></p>
-    </div>
 </div>
-@section scripts
+@*@section scripts
 {
     <script>
         $(document).ready(function () {
-            $(".js-r-net").on("click", function () {
-                window.location.replace("http://www.r-net.tech");
-            });
+            $(".js-r-net").attr("href", "https://www.R-NET.tech");
+
+            //$(".js-r-net").on("click", function () {
+            //    window.location.replace("https://www.R-NET.tech");
+            //});
         });
     </script>    
-}
+}*@

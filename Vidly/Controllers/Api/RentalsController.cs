@@ -85,7 +85,6 @@ namespace Vidly.Controllers.Api
 
         // PUT /api/rentals/id
         [HttpPut]
-        [Authorize(Roles = RoleName.CanManageRentals)]
         public IHttpActionResult ReturnRental(int id, RentalDto rentalDto)
         {
             if (!ModelState.IsValid)

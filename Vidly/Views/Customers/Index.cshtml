@@ -22,17 +22,7 @@
             <th scope="col">Edit / Delete</th>
         </tr>
     </thead>
-    <tbody>
-        @*@foreach (var customer in Model)
-        {
-            <tr>
-                <td scope="row">@Html.ActionLink(customer.Name, "Edit", "Customers", null, new { id = customer.Id })</td>
-                <td scope="row">@customer.MembershipType.DiscountRate</td>
-                <td scope="row">@customer.MembershipType.Name</td>
-                <td scope="row"><button class="btn-link js-delete" data-customer-id="@customer.Id">Delete</button></td>
-            </tr>
-        }*@
-    </tbody>
+    <tbody></tbody>
 </table>
 @*}*@
 
@@ -70,8 +60,12 @@
                 ]
             });
 
+            $("#customers").on("click", ".js-details", function () {
+                window.location.assign("/customers/details/" + $(this).attr("data-customer-id"));
+            });
+
             $("#customers").on("click", ".js-edit", function () {
-                window.location.replace("/customers/edit/" + $(this).attr("data-customer-id"));
+                window.location.assign("/customers/edit/" + $(this).attr("data-customer-id"));
             });
 
             $("#customers").on("click", ".js-delete", function () {

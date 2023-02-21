@@ -50,7 +50,7 @@ namespace Vidly.Controllers
 
             var movieInDb = _context.Movies.Single(m => m.Id == movieId);
 
-            rentalInDb.DateReturned = DateTime.Today;
+            rentalInDb.DateReturned = DateTime.Now;
             movieInDb.NumberAvailable++;
 
             _context.SaveChanges();
