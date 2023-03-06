@@ -13,5 +13,12 @@ namespace Vidly.Controllers
         {
             return View();
         }
+
+        public ActionResult About()
+        {
+            throw new Exception();
+
+            return View();
+        }
     }
 }
