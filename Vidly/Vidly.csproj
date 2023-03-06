@@ -564,6 +564,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="AppSettings.config" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -706,6 +707,7 @@
     <Content Include="Views\Rentals\New.cshtml" />
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
+    <Content Include="ConnectionStrings.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
