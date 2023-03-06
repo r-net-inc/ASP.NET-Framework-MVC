@@ -267,6 +267,7 @@
     <Compile Include="Models\MembershipAgeCheck.cs" />
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="ViewModels\MovieDetailsViewModel.cs" />
     <Compile Include="ViewModels\CustomerDetailsViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\RoleName.cs" />
@@ -708,6 +709,7 @@
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

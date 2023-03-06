@@ -4,9 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Movies</h2>
-@Html.ActionLink("New", "New", "Movies", null, new { @class = "btn btn-sm btn-success float-right" })
-<br />
+<h2>Movies @Html.ActionLink("New", "New", "Movies", null, new { @class = "btn btn-sm btn-success float-right" })</h2>
 <br />
 @*@if (!Model.Any())
     {
@@ -48,7 +46,10 @@
                 },
                 columns: [
                     {
-                        data: "title"
+                        data: "title",
+                        render: function (data, type, movie) {
+                            return "<a href='/movies/details/" + movie.id + "'>" + data + "</a>";
+                        }
                     },
                     {
                         data: "genre.name"

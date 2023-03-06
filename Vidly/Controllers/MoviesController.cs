@@ -44,17 +44,26 @@ namespace Vidly.Controllers
             //return RedirectToAction("Index", "Home", "Id", new { page = 1, sortBy = "name" });
         }
 
+        // GET /Movies/Details/id
         [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Details(int id)
         {
-            var movie = _context.Movies/*.Include(m => m.Genre)*/.SingleOrDefault(u => u.Id == id);
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(u => u.Id == id);
 
             if (movie == null)
             {
                 return HttpNotFound();
             }
 
-            return View(movie);
+            var rentals = _context.Rentals.Include(r => r.Customer).Where(r => r.Movie.Id == id).ToList();
+
+            var viewModel = new MovieDetailsViewModel
+            {
+                Movie = movie,
+                Rentals = rentals
+            };
+
+            return View(viewModel);
         }
 
         [Authorize(Roles = RoleName.CanManageMovies)]
@@ -109,6 +118,7 @@ namespace Vidly.Controllers
             return RedirectToAction("Index", "Movies");
         }
 
+        // GET /Movies/Edit/id
         [Authorize(Roles = RoleName.CanManageMovies)]
         public ActionResult Edit(int id)
         {
